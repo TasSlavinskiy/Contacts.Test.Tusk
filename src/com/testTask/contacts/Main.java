@@ -8,8 +8,6 @@ public class Main {
 
         ContactFrame contactFrame = new ContactFrame();
         contactFrame.setVisible(true);
-
-
     }
 
 }

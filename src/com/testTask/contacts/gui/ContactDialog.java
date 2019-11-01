@@ -1,15 +1,15 @@
 package com.testTask.contacts.gui;
 
 import com.testTask.contacts.storage.Contact;
-
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class ContactDialog  extends JDialog implements ActionListener {
@@ -23,23 +23,17 @@ public class ContactDialog  extends JDialog implements ActionListener {
                              WIDTH_BUTTON = 120,
                              HEIGHT_ALL_ELEMENTS = 25;
 
-    private final DateFormat date = new SimpleDateFormat("yyyy-mm-dd");
+    private static final DateFormat date = new SimpleDateFormat("yyyy-mm-dd");
 
 
     private final JTextPane textFirstName = new JTextPane(),
                             textLastName = new JTextPane(),
                             textPhoneNumber = new JTextPane();
-    private final JFormattedTextField   textDateOfBirth = new JFormattedTextField(getDateFormatter());
+    private JFormattedTextField  textDateOfBirth = new JFormattedTextField(date);;
 
     private Long contactId;
     private boolean save = false;
 
-    private DateFormatter getDateFormatter(){
-        DateFormatter dateFormatter = new DateFormatter(date);
-        dateFormatter.setAllowsInvalid(false);
-        dateFormatter.setOverwriteMode(true);
-        return dateFormatter;
-    }
 
     public ContactDialog() {
         this(null);
@@ -97,10 +91,18 @@ public class ContactDialog  extends JDialog implements ActionListener {
         labelDateOfBirth.setHorizontalAlignment(SwingConstants.RIGHT);
         labelDateOfBirth.setBounds(new Rectangle(PADDING, 3 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_POINT, HEIGHT_ALL_ELEMENTS));
         add(labelDateOfBirth);
+        MaskFormatter formatter;
+        try {
+            formatter = new MaskFormatter("####-##-##");
+            formatter.setPlaceholder("YYYY-MM-DD");
+            formatter.setValidCharacters("0123456789");
+            formatter.install(textDateOfBirth);
+        } catch (ParseException exc) {
+            exc.printStackTrace();
+        }
         textDateOfBirth.setBounds(new Rectangle(WIDTH_POINT + 2 * PADDING, 3 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_INPUT_FIELD, HEIGHT_ALL_ELEMENTS));
         textDateOfBirth.setBorder(BorderFactory.createEtchedBorder());
-        textDateOfBirth.setColumns(32);
-        textDateOfBirth.setValue(new Date());
+
         add(textDateOfBirth);
     }
 
