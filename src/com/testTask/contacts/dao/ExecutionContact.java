@@ -14,5 +14,7 @@ public interface ExecutionContact {
 
     void deleteContact(String phoneNumber);
 
+    String checkContact(String phoneNumber);
+
     List<Contact> findContacts();
 }

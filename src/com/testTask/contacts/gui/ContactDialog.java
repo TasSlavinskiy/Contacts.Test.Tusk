@@ -3,9 +3,14 @@ package com.testTask.contacts.gui;
 import com.testTask.contacts.storage.Contact;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ContactDialog  extends JDialog implements ActionListener {
 
@@ -18,13 +23,23 @@ public class ContactDialog  extends JDialog implements ActionListener {
                              WIDTH_BUTTON = 120,
                              HEIGHT_ALL_ELEMENTS = 25;
 
+    private final DateFormat date = new SimpleDateFormat("yyyy-mm-dd");
+
+
     private final JTextPane textFirstName = new JTextPane(),
                             textLastName = new JTextPane(),
-                            textPhoneNumber = new JTextPane(),
-                            textDateOfBirth = new JTextPane();
+                            textPhoneNumber = new JTextPane();
+    private final JFormattedTextField   textDateOfBirth = new JFormattedTextField(getDateFormatter());
 
     private Long contactId;
     private boolean save = false;
+
+    private DateFormatter getDateFormatter(){
+        DateFormatter dateFormatter = new DateFormatter(date);
+        dateFormatter.setAllowsInvalid(false);
+        dateFormatter.setOverwriteMode(true);
+        return dateFormatter;
+    }
 
     public ContactDialog() {
         this(null);
@@ -51,7 +66,7 @@ public class ContactDialog  extends JDialog implements ActionListener {
 
     private void buildPointsAndFieldsOnForm(){
 
-        JLabel labelFirstName = new JLabel("Имя : ");
+        JLabel labelFirstName = new JLabel("First Name : ");
         labelFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
         labelFirstName.setBounds(new Rectangle(PADDING, 0 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_POINT, HEIGHT_ALL_ELEMENTS));
         add(labelFirstName);
@@ -60,7 +75,7 @@ public class ContactDialog  extends JDialog implements ActionListener {
         add(textFirstName);
 
 
-        JLabel labelLastName = new JLabel("Фамилия : ");
+        JLabel labelLastName = new JLabel("Last Name : ");
         labelLastName.setHorizontalAlignment(SwingConstants.RIGHT);
         labelLastName.setBounds(new Rectangle(PADDING, 1 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_POINT, HEIGHT_ALL_ELEMENTS));
         add(labelLastName);
@@ -69,7 +84,7 @@ public class ContactDialog  extends JDialog implements ActionListener {
         add(textLastName);
 
 
-        JLabel labelPhoneNumber = new JLabel("Мобильный телефон : ");
+        JLabel labelPhoneNumber = new JLabel("Phone : ");
         labelPhoneNumber.setHorizontalAlignment(SwingConstants.RIGHT);
         labelPhoneNumber.setBounds(new Rectangle(PADDING, 2 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_POINT, HEIGHT_ALL_ELEMENTS));
         add(labelPhoneNumber);
@@ -78,12 +93,14 @@ public class ContactDialog  extends JDialog implements ActionListener {
         add(textPhoneNumber);
 
 
-        JLabel labelDateOfBirth = new JLabel("Дата Рождения : ");
+        JLabel labelDateOfBirth = new JLabel("Date of Birth : ");
         labelDateOfBirth.setHorizontalAlignment(SwingConstants.RIGHT);
         labelDateOfBirth.setBounds(new Rectangle(PADDING, 3 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_POINT, HEIGHT_ALL_ELEMENTS));
         add(labelDateOfBirth);
         textDateOfBirth.setBounds(new Rectangle(WIDTH_POINT + 2 * PADDING, 3 * HEIGHT_ALL_ELEMENTS + PADDING, WIDTH_INPUT_FIELD, HEIGHT_ALL_ELEMENTS));
         textDateOfBirth.setBorder(BorderFactory.createEtchedBorder());
+        textDateOfBirth.setColumns(32);
+        textDateOfBirth.setValue(new Date());
         add(textDateOfBirth);
     }
 

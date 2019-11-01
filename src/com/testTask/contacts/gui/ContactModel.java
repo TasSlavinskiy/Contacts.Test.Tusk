@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ContactModel extends AbstractTableModel {
 
-    private static final String[] headers = {"User ID ", "Имя ", "Фамилия ", "Номер Телефона ", "Дата Рождения "};
+    private static final String[] headers = {"User ID ", "First Name ", "Last Name ", "Phone ", "Date Of Birth "};
     private final List<Contact> contacts;
 
     public ContactModel(List<Contact> contacts) {

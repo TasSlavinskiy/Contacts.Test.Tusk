@@ -31,6 +31,8 @@ public class ContactManager {
         executionContact.deleteContact(phoneNumberUser);
     }
 
+    public String checkContact(String phoneNumberUser){return executionContact.checkContact(phoneNumberUser);}
+
     public List<Contact> findContacts(){
         return executionContact.findContacts();
     }

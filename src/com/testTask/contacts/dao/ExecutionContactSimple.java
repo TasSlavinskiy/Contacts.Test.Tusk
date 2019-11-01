@@ -64,6 +64,17 @@ public class ExecutionContactSimple implements ExecutionContact {
         return finalContactId;
     }
 
+    @Override
+    public String checkContact(String phoneNumber) {
+        for (Iterator<Contact> iteratorContacts = contacts.iterator(); iteratorContacts.hasNext();){
+            Contact contact = iteratorContacts.next();
+            if (contact.getPhoneNumber() == phoneNumber){
+                return contact.getPhoneNumber();
+            }
+        }
+        return null;
+    }
+
     private Long generateContactId(){
         UUID contactIdUUID = UUID.randomUUID();
         Long temporaryContactId = contactIdUUID.getLeastSignificantBits();

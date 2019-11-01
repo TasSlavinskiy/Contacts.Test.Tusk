@@ -33,9 +33,9 @@ public class ContactFrame extends JFrame implements ActionListener {
 
         buttonPanel.setLayout(gridBagLayout);
 
-        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Обновить", LOAD));
-        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Добавить", ADD));
-        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Удалить", DELETED));
+        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Load", LOAD));
+        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Add", ADD));
+        buttonPanel.add(createButton(gridBagLayout, gridBagConstraints, "Delete", DELETED));
 
         JPanel leftPanel = new JPanel();
 
@@ -92,23 +92,24 @@ public class ContactFrame extends JFrame implements ActionListener {
 
     private void deleteContact(){
         int highlightedLine = jContactTable.getSelectedRow();
-        if (highlightedLine != 1){
+        if (highlightedLine != -1){
             Long id = Long.parseLong(jContactTable.getModel().getValueAt(highlightedLine,0).toString());
             String numberDeletedUser = contactManager.getContactUseId(id).getPhoneNumber();
             contactManager.deletedContact(numberDeletedUser);
             loadContact();
         } else {
-            JOptionPane.showMessageDialog(this, "Выделите строку удаляемого контакта");
+            JOptionPane.showMessageDialog(this, "Highlight the line of the remote contact");
         }
     }
 
     private void saveContact(ContactDialog contactDialog) {
         if (contactDialog.isSave()) {
             Contact contact = contactDialog.getContact();
-            if (contact.getContactId() == null){
+            if (contact.getContactId() == null ){
                 contactManager.addContact(contact);
-            } else {
-                JOptionPane.showMessageDialog(this, "Данный контакт уже зарегитрирован");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "This contact is already registered");
             }
             loadContact();
         }
